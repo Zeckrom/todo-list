@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css">
+
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Simple to do list</h1>
+    <div class="to-do-list">
+      <div class="control">
+        <input type="text" id="new-task">
+        <button id="add" type="button" name="button">Add +</button>
+      </div>
+      <div class="tasks">
+
+      </div>
+      <div class="filter">
+        <input type="radio" id="all" name="filter" value="all" checked="checked">
+        <label for="tech">All</label>
+        <br>
+
+        <input type="radio" id="pending" name="filter" value="pending">
+        <label for="bio">Pending</label>
+        <br>
+
+        <input type="radio" id="done" name="filter" value="done">
+        <label for="architecture">Done</label>
+        <br>
+      </div>
+      <div class="temp">
+        <input type="text" id="country">
+        <button id="add-temp">Search</button>
+        <h2 class="temp-result"></h2>
+      </div>
+    </div>
+    <script src="jquery.js"></script>
+    <script src="main.js"></script>
+    <script>
+      function kToC(k){
+        return k - 273.15 ;
+      }
+      function getTemp(city,success){
+        $.getJSON( "http://api.openweathermap.org/data/2.5/weather?q=" +
+         city + "&APPID=3064787ba9eecb3c9ea2defe4f58b2d2", function( data ){
+            success(data)
+         })
+
+      }
+      function setTemp(data){
+        $(".temp-result").text(kToC(data.main.temp))
+      }
+      $("#add-temp").click(function(){
+        let city = $("#country").val()
+        getTemp(city,setTemp)
+      })
+
+
+    // $("#add-temp").click(function(){
+    //   let country = $("#country").val()
+    //   $.getJSON( "http://api.openweathermap.org/data/2.5/weather?q=" + country + "&APPID=3064787ba9eecb3c9ea2defe4f58b2d2", function( data ) {
+    //   console.log(data.main.temp -  273,15)
+    //   });
+    // })
+
+    </script>
+
+  </body>
+</html>
